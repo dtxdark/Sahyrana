@@ -11,7 +11,7 @@ return new class extends Migration {
             $table->id();
             $table->string('title');
             $table->text('content');
-
+            $table->integer('likes')->default(0);
             // Foreign key for poet (nullable)
             $table->unsignedBigInteger('poet_id')->nullable();
             $table->foreign('poet_id')->references('id')->on('poets')->onDelete('cascade');
@@ -31,6 +31,9 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('poems');
+        Schema::table('poems', function (Blueprint $table) {
+            $table->dropColumn('likes');
+            Schema::dropIfExists('poems');
+        });
     }
 };
