@@ -3,18 +3,26 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 use App\Models\User;
+use Faker\Factory as Faker;
+use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
-    public function run()
+    public function run(): void
     {
-        for ($i = 0; $i < 10; $i++) {
+        $faker = Faker::create();
+
+
+        User::create([
+            'name' => 'Kerim',
+            'email' => '@example.com',
+            'password' => Hash::make('password'),
+        ]);
+            for ($i = 0; $i < 50; $i++) {
             User::create([
-                'name' => 'User ' . ($i + 1),
-                'email' => 'user' . ($i + 1) . '_' . Str::random(5) . '@example.com',
+                'name' => $faker->name,
+                'email' => $faker->unique()->safeEmail,
                 'password' => Hash::make('password'),
             ]);
         }

@@ -2,24 +2,49 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
+use App\Models\Poet;
 use App\Models\Book;
+use App\Models\Poem;
+use Illuminate\Database\Seeder;
 
 class BookSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
-        $book = Book::create([
-            'title' => 'Sample Book',
-            'author' => 'Sample Author',
-            'publication_date' => '2023-01-01',
-        ]);
+        $poets = [
+            ['name' => 'Magtumguly', 'books' => [
+                'Konul',
+            ]],
+            ['name' => 'Kerim Gurbannepesow', 'books' => [
+                'Oylanma diyary',
+            ]],
+            ['name' => 'Gurbannazar Ezizow', 'books' => [
+                'Turkmen Sahrasy',
+            ]],
+            ['name' => 'Ata Atajanow', 'books' => [
+                'Teke Gyzy Tatyana',
+            ]],
+        ];
 
-        // You can add more books here
+        foreach ($poets as $poetData) {
+            $poet = Poet::create([
+                'name' => $poetData['name'],
+            ]);
+
+            foreach ($poetData['books'] as $bookTitle) {
+                $book = Book::create([
+                    'poet_id' => $poet->id,
+                    'title' => $bookTitle,
+                ]);
+
+                // Her bir kitaba rastgele şiirleri ekle
+                Poem::factory(3)->create([
+                    'book_id' => $book->id,
+                ]);
+            }
+        }
     }
 }

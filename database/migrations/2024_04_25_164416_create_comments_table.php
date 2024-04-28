@@ -14,9 +14,11 @@ return new class extends Migration
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
             $table->text('content');
-            // Define relationship with category model (foreign key)
-            $table->unsignedBigInteger('category_id');
-            $table->foreign('category_id')->references('id')->on('categories');
+            $table->unsignedBigInteger('poem_id')->index();
+
+            $table->foreign('poem_id')->references('id')->on('poems')->onDelete('cascade');
+
+
             $table->timestamps();
         });
     }
@@ -26,6 +28,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('comment');
+        Schema::table('comments',function (Blueprint $table) {
+            $table->dropForeign(['poem_id']);
+            $table->dropColumn(['poem_id']);
+        });
+        Schema::dropIfExists('comments');
     }
 };

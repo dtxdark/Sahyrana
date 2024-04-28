@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Poem;
+use Database\Factories\PoemFactory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,13 +15,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Seed your models here
-        // Example: Call a seeder class for each model
-        $this->call(UserSeeder::class);
-        $this->call(BookSeeder::class);
-        $this->call(PoemSeeder::class);
-        $this->call(PoetSeeder::class);
-        $this->call(CategorySeeder::class);
-        $this->call(CommentSeeder::class);
+        Poem::factory(50)->create();
+
+        {
+            $this->call([
+                UserSeeder::class,
+                PoemSeeder::class,
+                BookSeeder::class,
+                CategorySeeder::class,
+                CommentSeeder::class]);
+        }
     }
 }
