@@ -16,9 +16,15 @@ class Book extends Model
         'category_id',
     ];
 
+
+
     public function poet()
+{
+    return $this->belongsTo(Poet::class);
+}
+    public function book()
     {
-        return $this->belongsTo(Poet::class);
+        return $this->belongsTo(Book::class);
     }
 
     public function category()

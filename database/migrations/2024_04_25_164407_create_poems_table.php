@@ -4,22 +4,22 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
-    public function up(): void
+class CreatePoemsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
     {
         Schema::create('poems', function (Blueprint $table) {
             $table->id();
             $table->string('title');
             $table->text('content');
-            $table->integer('likes')->default(0);
-            // Foreign key for poet (nullable)
-            $table->unsignedBigInteger('poet_id')->nullable();
-            $table->foreign('poet_id')->references('id')->on('poets')->onDelete('cascade');
-
-            // Foreign key for book (nullable)
+            $table->unsignedBigInteger('likes')->default(0);
+            $table->unsignedBigInteger('poet_id');
             $table->unsignedBigInteger('book_id')->nullable();
-            $table->foreign('book_id')->references('id')->on('books')->onDelete('cascade');
-
             $table->timestamps();
         });
     }
@@ -29,11 +29,8 @@ return new class extends Migration {
      *
      * @return void
      */
-    public function down(): void
+    public function down()
     {
-        Schema::table('poems', function (Blueprint $table) {
-            $table->dropColumn('likes');
-            Schema::dropIfExists('poems');
-        });
+        Schema::dropIfExists('poems');
     }
-};
+}

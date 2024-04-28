@@ -4,19 +4,20 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateBooksTable extends Migration
 {
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up():void
+    public function up()
     {
-        Schema::create('comments', function (Blueprint $table) {
+        Schema::create('books', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('poem_id')->constrained()->onDelete('cascade'); // Yorum yapılan şiirin id'si
-            $table->text('content');
+            $table->unsignedBigInteger('poet_id');
+            $table->foreign('poet_id')->references('id')->on('poets')->onDelete('cascade');
+            $table->string('title');
             $table->timestamps();
         });
     }
@@ -26,8 +27,8 @@ return new class extends Migration
      *
      * @return void
      */
-    public function down():void
+    public function down()
     {
-        Schema::dropIfExists('comments');
+        Schema::dropIfExists('books');
     }
-};
+}

@@ -4,45 +4,37 @@ namespace Database\Seeders;
 
 use App\Models\Poet;
 use App\Models\Book;
-use App\Models\Poem;
 use Illuminate\Database\Seeder;
+use Faker\Factory as Faker;
 
 class BookSeeder extends Seeder
 {
     /**
      * Run the database seeds.
+     *
+     * @return void
      */
-    public function run(): void
+    public function run()
     {
-        $poets = [
-            ['name' => 'Magtumguly', 'books' => [
-                'Konul',
-            ]],
-            ['name' => 'Kerim Gurbannepesow', 'books' => [
-                'Oylanma diyary',
-            ]],
-            ['name' => 'Gurbannazar Ezizow', 'books' => [
-                'Turkmen Sahrasy',
-            ]],
-            ['name' => 'Ata Atajanow', 'books' => [
-                'Teke Gyzy Tatyana',
-            ]],
-        ];
+        $faker = Faker::create();
 
-        foreach ($poets as $poetData) {
+        $poetCount = 50;
+
+        for ($i = 1; $i <= $poetCount; $i++) {
+
+            $bio = $faker->paragraph();
+
             $poet = Poet::create([
-                'name' => $poetData['name'],
+                'name' => "Poet $i",
+                'bio' => $bio,
             ]);
 
-            foreach ($poetData['books'] as $bookTitle) {
-                $book = Book::create([
-                    'poet_id' => $poet->id,
-                    'title' => $bookTitle,
-                ]);
+            $randomBookCount = rand(5, 10);
 
-                // Her bir kitaba rastgele şiirleri ekle
-                Poem::factory(3)->create([
-                    'book_id' => $book->id,
+            for ($j = 1; $j <= $randomBookCount; $j++) {
+                Book::create([
+                    'poet_id' => $poet->id,
+                    'title' => "Book $j",
                 ]);
             }
         }

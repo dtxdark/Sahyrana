@@ -15,15 +15,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Poem::factory(50)->create();
+
 
         {
             $this->call([
                 UserSeeder::class,
-                PoemSeeder::class,
                 BookSeeder::class,
+                PoemSeeder::class,
                 CategorySeeder::class,
                 CommentSeeder::class]);
         }
+        Poem::factory(50)->create();
     }
 }

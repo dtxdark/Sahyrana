@@ -16,8 +16,11 @@ class Poet extends Model
     ];
 
 
-
-    public function poem(): HasMany
+    public function books(): HasMany
+    {
+        return $this->hasMany(self::class, 'book_id');
+    }
+    public function poems(): HasMany
     {
         return $this->hasMany(self::class, 'poem_id');
     }
