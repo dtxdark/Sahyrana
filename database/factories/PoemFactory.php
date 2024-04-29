@@ -31,7 +31,7 @@ class PoemFactory extends Factory
         }
 
         return [
-            'title' => $this->faker->sentence,
+            'title' => $this->faker->name,
             'content' => $this->faker->paragraph,
             'likes' => $this->faker->numberBetween(0, 999999),
             'poet_id' => $poet->id ?? null,
