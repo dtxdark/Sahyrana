@@ -29,8 +29,8 @@ class PoemSeeder extends Seeder
         ]);
 
         foreach ($books as $book) {
-            // Adjust the logic for number of poems per book as needed
-            $poemCount = rand(2, 4);
+
+            $poemCount = rand(10, 15);
             Poem::factory()->count($poemCount)->create([
                 'book_id' => $book->id,
                 'poet_id' => $poets->random()->id,

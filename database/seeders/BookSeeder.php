@@ -18,7 +18,7 @@ class BookSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        $poetCount = 50;
+        $poetCount = 100;
 
         for ($i = 1; $i <= $poetCount; $i++) {
 
@@ -29,13 +29,15 @@ class BookSeeder extends Seeder
                 'bio' => $bio,
             ]);
 
-            $randomBookCount = rand(5, 10);
+            $randomBookCount = 1000;
 
-            for ($j = 1; $j <= $randomBookCount; $j++) {
-                Book::create([
-                    'poet_id' => $poet->id,
-                    'title' => "Book $j",
+            for ($j = 1; $j <= $randomBookCount; $j++)
+            {
+               $book = Book::create([
+                    'poet_id' => $poet->rand($poet->id),
+                    'title' => "book $j",
                 ]);
+
             }
         }
     }
